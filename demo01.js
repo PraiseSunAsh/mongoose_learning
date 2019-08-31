@@ -1,24 +1,39 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema
 //连接数据库
+
 mongoose.connect('mongodb://39.107.97.170:27017/itcast', {useNewUrlParser: true});
 
+console.log(mongoose);
 //设计数据库结构
-var user_schema = new Schema({
-    username:{
-        type:String,
-        required: true
+var arti_schema = new Schema({
+    cate:{
+        type:String
     },
-
-    password:{
-        type:String,
-        required:true
+    imgsrc:{
+        type:String
     },
-    email:{
+    link:{
+        type:String
+    },
+    title:{
         type:String
     }
   });   
 //将自定义的数据库结构注册为模型
+
 //第一个参数尽量为大写单数字符串
 //返回值：模型构造函数
-var user = mongoose.model('User',user_schema);
+var Article = mongoose.model('Article',arti_schema);
+
+Article.find((err,res)=>{
+    if(err){
+        console.log("查询失败")
+    }else{
+        console.log("查询成功")
+        for(let i = 0;i<5;i++){
+            console.log(res[i]._doc.title)
+        }
+    }
+}).limit(5).skip(910);
+
